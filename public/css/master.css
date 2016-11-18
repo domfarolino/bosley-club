@@ -1,3 +1,6 @@
 html, body {
-  font-family: Lucida Console;
+  font-family: Roboto;
+  /* Normalize */
+  margin: 0;
+  padding: 0;
 }
