@@ -3,27 +3,14 @@
   <head>
     <title>Bosley</title>
     <link rel="shortcut icon" type="image/png" href="https://bosley.club/favicon.ico?v2"/>
-  </head>
-  <body>
+    <link rel="stylesheet" href="/css/master.css" media="screen">
     <script>
       var host = "bosley.club";
       if ((host == window.location.host) && (window.location.protocol != "https:")) window.location.protocol = "https";
     </script>
-
-    <h2>
-      Raspberry Pi 3 <b>external</b> website
-    </h2>
-    <p>
-      We got some good stuff going on here.
-    </p>
-    <p><a href="https://domfarolino.com">Dom Farolino</a>
-      <b>#iot #bosley #pi</b>
-    </p>
-  
-    <style>
-    html, body {
-      font-family: Lucida Console;
-    }
-    </style>
+  </head>
+  <body>
+    <bosley-root></bosley-root>
   </body>
+  <script src="/js/bundle.min.js" async defer></script>
 </html>
