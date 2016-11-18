@@ -25,8 +25,9 @@ const pages = require('./lib/controllers/pages');
 app.get('/', pages.index);
 
 const lex = LEX.create({
+  server: 'staging',
   configDir: require('os').homedir() + '/letsencrypt/etc',
-  approveRegistration: function (hostname, cb) {
+  approveDomains: function (hostname, cb) {
     cb(null, {
       domains: [hostname],
       email: 'domfarolino@gmail.com',
