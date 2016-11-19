@@ -3,24 +3,28 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run webpack && node ./bin/www",
-    "webpack": "cd ./lib/client && ../../node_modules/webpack/bin/webpack.js && cd ../.."
+    "start": "concurrently \"npm run webpack\" \"npm run serve\"",
+    "serve": "sudo bash -ic \"node ./bin/www\"",
+    "webpack": "cd ./lib/client && ../../node_modules/webpack/bin/webpack.js --watch && cd ../.."
   },
   "dependencies": {
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "debug": "^2.3.2",
+    "dotenv": "^2.0.0",
     "express": "~4.13.1",
     "http2": "^3.3.2",
     "jade": "~1.11.0",
     "letsencrypt-express": "^2.0.5",
-    "morgan": "^1.7.0",
-    "serve-favicon": "~2.3.0"
+    "morgan": "^1.7.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.8",
     "babel-preset-es2015": "^6.18.0",
-    "webpack": "2.1.0-beta.27"
+    "concurrently": "^3.1.0",
+    "css-loader": "^0.26.0",
+    "html-loader": "^0.4.4",
+    "webpack": "^2.1.0-beta.27"
   }
 }

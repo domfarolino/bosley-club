@@ -1,6 +1,9 @@
+'use strict';
+
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
-const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -8,16 +11,18 @@ const LEX = require('letsencrypt-express');
 
 const app = express();
 
-// view engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'lib', 'views'));
 app.set('view engine', 'jade');
 
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// Middleware setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const PORT = process.env.PORT;
 
 const pages = require('./lib/controllers/pages');
 
@@ -34,13 +39,11 @@ function approveDomains(opts, certs, cb) {
   // This is where you check your database and associated
   // email addresses with domains and agreements and such
 
-
   // The domains being approved for the first time are listed in opts.domains
   // Certs being renewed are listed in certs.altnames
   if (certs) {
     opts.domains = certs.altnames;
-  }
-  else {
+  } else {
     opts.email = 'domfarolino@gmail.com';
     opts.agreeTos = true;
   }
@@ -54,7 +57,7 @@ function approveDomains(opts, certs, cb) {
 
 lex.onRequest = app;
 
-require('http').createServer(lex.middleware(app)).listen(80, function () {
+require('http').createServer(lex.middleware(app)).listen(PORT, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
 
