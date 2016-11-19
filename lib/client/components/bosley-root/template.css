@@ -1,0 +1,42 @@
+sc-view {
+  contain: strict;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(.95);
+  transition: transform 0.3s cubic-bezier(0, 0, .3, 1),
+              opacity 0.3s cubic-bezier(0, 0, .3, 1);
+}
+
+sc-view.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.view-home {
+  background: red;
+}
+
+.view-about {
+  background: blue;
+}
+
+.view-contact {
+  background: tomato;
+}
+
+nav {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  background: #FFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+  border-radius: 3px;
+  padding: 10px 20px;
+  z-index: 1;
+}

@@ -26,6 +26,8 @@ const pages = require('./lib/controllers/pages');
 
 // Routes
 app.get('/', pages.index);
+app.get('/about', pages.index);
+app.get('/contact', pages.index);
 
 const lex = LEX.create({
   server: 'staging',

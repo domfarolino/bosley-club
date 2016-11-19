@@ -1,1 +1,15 @@
-<bosley-header>
+<bosley-header></bosley-header>
+
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+
+<sc-view class="view-home" route="^/$">Home</sc-view>
+<sc-view class="view-about" route="^/about/(.*)">About</sc-view>
+<sc-view class="view-contact" route="^/contact/(.*)">Contact</sc-view>
+
+<sc-router></sc-router>
