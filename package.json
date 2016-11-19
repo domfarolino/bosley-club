@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run webpack\" \"npm run serve\"",
+    "start": "concurrently \"npm run webpack\" \"npm run serve\" --kill-others",
     "serve": "sudo bash -ic \"node ./bin/www\"",
     "webpack": "cd ./lib/client && ../../node_modules/webpack/bin/webpack.js --watch && cd ../.."
   },

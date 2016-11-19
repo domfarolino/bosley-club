@@ -22,8 +22,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const PORT = process.env.PORT;
-
 const pages = require('./lib/controllers/pages');
 
 // Routes
@@ -57,18 +55,13 @@ function approveDomains(opts, certs, cb) {
 
 lex.onRequest = app;
 
-require('http').createServer(lex.middleware(app)).listen(PORT, function () {
+require('http').createServer(lex.middleware(app)).listen(process.env.SERVE_PORT, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
 
 require('https').createServer(lex.httpsOptions, lex.middleware(app)).listen(443, function () {
   console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
 });
-
-// lex.listen([80], [443, 5001], function () {
-//   const protocol = ('requestCert' in this) ? 'https': 'http';
-//   console.log("Listening at " + protocol + '://localhost:' + this.address().port);
-// });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -100,6 +93,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
