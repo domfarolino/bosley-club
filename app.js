@@ -31,9 +31,12 @@ app.get('/contact', pages.index);
 
 const lex = LEX.create({
   server: 'staging',
-  configDir: require('os').homedir() + '/letsencrypt/etc',
-  approveDomains: approveDomains
+  //configDir: require('os').homedir() + '/letsencrypt/etc',
+  configDir: '/etc/letsencrypt',
+approveDomains: approveDomains
 });
+
+console.log(require('os').homedir() + '/letsencrypt/etc');
 
 function approveDomains(opts, certs, cb) {
   // This is where you check your database and associated
