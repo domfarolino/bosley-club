@@ -5,4 +5,4 @@
 [![devDependency Status](https://david-dm.org/domfarolino/bosley-club/dev-status.svg)](https://david-dm.org/domfarolino/bosley-club#info=devDependencies)
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
-Site utilizing the `customElements` API. Hosted on Raspberry Pi; SSL with [letsencrypt](https://letsencrypt.org/)
+This site is experimental and does not work properly in a number of browser, especially mobile. The site utilizes the `customElements` API, is hosted on a Raspberry Pi, and uses [letsencrypt](https://letsencrypt.org/) for SSL certificates.
