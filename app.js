@@ -9,6 +9,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const LEX = require('letsencrypt-express');
 
+// For routes
+const pages = require('./lib/controllers/pages');
+
+// Express app
 const app = express();
 
 // View engine setup
@@ -20,20 +24,21 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-const pages = require('./lib/controllers/pages');
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+})
 
 // Routes
 app.get('/', pages.index);
-app.get('/about', pages.index);
-app.get('/contact', pages.index);
+app.get('/about/', pages.index);
+app.get('/contact/', pages.index);
 
 const lex = LEX.create({
   server: 'staging',
   //configDir: require('os').homedir() + '/letsencrypt/etc',
   configDir: '/etc/letsencrypt',
-approveDomains: approveDomains
+  approveDomains: approveDomains
 });
 
 console.log(require('os').homedir() + '/letsencrypt/etc');
