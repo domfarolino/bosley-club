@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <title>Bosley</title>
     <meta charset="utf-8">
     <meta name="author" content="Dom Farolino">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
@@ -10,8 +11,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Roboto">
     <link rel="stylesheet" href="/css/master.css" media="screen">
 
-    <title>Bosley</title>
-
     <script>
       var host = "bosley.club";
       if ((host == window.location.host) && (window.location.protocol != "https:")) window.location.protocol = "https";
@@ -20,5 +19,16 @@
   <body>
     <bosley-root></bosley-root>
   </body>
+
+  <script>
+    // Get the user a proper top-level error if customElements are not supported
+    if (!('customElements' in window)) {
+      console.warn('Custom elements are not supported in your browser');
+      const elementsNotSupported = document.createElement('h1');
+      elementsNotSupported.innerText = 'Custom Elements are not supported in your browser';
+      document.body.appendChild(elementsNotSupported);
+    }
+  </script>
+
   <script src="/js/bundle.min.js" async defer></script>
 </html>
