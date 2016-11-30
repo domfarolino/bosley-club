@@ -1,10 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
+    <title>Bosley</title>
     <meta charset="utf-8">
-    <title>Contact</title>
+    <meta name="author" content="Dom Farolino">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="theme-color" content="#FF00FF">
+
+    <link rel="icon" type="image/png" href="/favicon.ico?v2"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Roboto">
+    <link rel="stylesheet" href="/css/master.css" media="screen">
+
+    <script>
+      var host = "bosley.club";
+      if ((host == window.location.host) && (window.location.protocol != "https:")) window.location.protocol = "https";
+    </script>
   </head>
   <body>
-    Contact page
+    <bosley-header></bosley-header>
+
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <sc-view remote class="view-home" route="^/$"></sc-view>
+    <sc-view remote class="view-about" route="^/about(.*)"></sc-view>
+
+    <sc-view class="view-contact visible" route="^/contact(.*)">
+      <dom-card>
+        <h2 slot="dom-card-title">Contact</h2>
+        <p slot="dom-card-body">
+          Shoot us a message
+        </p>
+        <input type="text" name="name" value="">
+        <button type="button" name="button">Send it!</button>
+      </dom-card>
+    </sc-view>
+
+    <sc-router></sc-router>
   </body>
+
+  <script src="/js/bundle.min.js" async defer></script>
 </html>

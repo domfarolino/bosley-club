@@ -17,18 +17,30 @@
     </script>
   </head>
   <body>
-    <bosley-root></bosley-root>
-  </body>
+    <bosley-header></bosley-header>
 
-  <script>
-    // Get the user a proper top-level error if customElements are not supported
-    if (!('customElements' in window)) {
-      console.warn('Custom elements are not supported in your browser');
-      const elementsNotSupported = document.createElement('h1');
-      elementsNotSupported.innerText = 'Custom Elements are not supported in your browser';
-      document.body.appendChild(elementsNotSupported);
-    }
-  </script>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <sc-view class="view-home visible" route="^/$">
+      <dom-card>
+        <h2 slot="dom-card-title">Home</h2>
+        <p slot="dom-card-body">
+          Welcome home to the Bosley app!
+        </p>
+      </dom-card>
+    </sc-view>
+
+    <sc-view remote class="view-about" route="^/about(.*)"></sc-view>
+    <sc-view remote class="view-contact" route="^/contact(.*)"></sc-view>
+
+    <sc-router></sc-router>
+  </body>
 
   <script src="/js/bundle.min.js" async defer></script>
 </html>
