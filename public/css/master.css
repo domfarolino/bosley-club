@@ -73,8 +73,16 @@ bosley-header > nav > ul {
 bosley-header > nav > ul > li {
   display: inline-block;
   float: left;
+  padding: 6px 8px;
+}
+
+bosley-header > nav > ul > li:hover {
+  background: rgba(40, 40, 40, .4);
+}
+
+bosley-header > nav > ul > li > a {
   text-decoration: none;
-  padding: 5px;
+  color: white;
 }
 
 /*nav {
