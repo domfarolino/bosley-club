@@ -12,7 +12,13 @@
 }
 
 .header-title {
-  /*font-size: 24px;*/
   color: white;
   margin: 0px;
+  max-width: 300px;
+  display: inline-block;
+}
+
+.header > .header-content {
+  max-width: 900px;
+  margin: 0 auto;
 }
