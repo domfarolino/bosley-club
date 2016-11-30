@@ -24,15 +24,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-})
-
-// Routes
-app.get('/', pages.index);
-app.get('/about/', pages.index);
-app.get('/contact/', pages.index);
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 const lex = LEX.create({
   server: 'staging',
