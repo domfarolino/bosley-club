@@ -35,17 +35,38 @@ sc-view.visible {
   opacity: 1;
   pointer-events: auto;
   transform: none;
-  background: #ececec;
+  background: inherit;
 }
 
-sc-view[remote]::after {
+sc-view[remote].pending::before {
   content: '';
+  opacity: 1;
+  pointer-events: none;
   position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ececec;
+  transition: opacity 0.2s cubic-bezier(0, 0, .3, 1);
+}
+
+sc-view[remote].pending::after {
+  content: '';
+  opacity: 1;
+  position: fixed;
+  pointer-events: events;
   left: 50%;
   top: 50%;
   width: 32px;
   height: 32px;
   background: url(/imgs/loader.gif);
+  transition: opacity 0.2s cubic-bezier(0, 0, .3, 1);
+}
+
+sc-view[remote].pending.loaded::before,
+sc-view[remote].pending.loaded::after {
+  opacity: 0;
 }
 
 .view-home {
