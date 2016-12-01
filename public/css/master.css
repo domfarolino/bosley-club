@@ -38,7 +38,7 @@ sc-view.visible {
   background: inherit;
 }
 
-sc-view[remote].pending::before {
+sc-view[remote]::before {
   content: '';
   opacity: 1;
   pointer-events: none;
@@ -47,13 +47,13 @@ sc-view[remote].pending::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #ececec;
+  background: inherit;
   transition: opacity 0.2s cubic-bezier(0, 0, .3, 1);
 }
 
-sc-view[remote].pending::after {
+sc-view[remote]::after {
   content: '';
-  opacity: 1;
+  opacity: 0;
   position: fixed;
   pointer-events: events;
   left: 50%;
@@ -64,8 +64,12 @@ sc-view[remote].pending::after {
   transition: opacity 0.2s cubic-bezier(0, 0, .3, 1);
 }
 
-sc-view[remote].pending.loaded::before,
-sc-view[remote].pending.loaded::after {
+sc-view[remote].pending::after {
+  opacity: 1;
+}
+
+sc-view[remote].loaded::before,
+sc-view[remote].loaded::after {
   opacity: 0;
 }
 
