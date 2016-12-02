@@ -73,18 +73,6 @@ sc-view[remote].loaded::after {
   opacity: 0;
 }
 
-.view-home {
-  /*background: #ececec;*/
-}
-
-.view-about {
-  /*background: #2196F3;*/
-}
-
-.view-contact {
-  /*background: tomato;*/
-}
-
 bosley-header > nav {
   display: inline-block;
   float: right;
@@ -98,7 +86,7 @@ bosley-header > nav > ul {
 bosley-header > nav > ul > li {
   display: inline-block;
   float: left;
-  padding: 6px 8px;
+  padding: 6px 15px;
 }
 
 bosley-header > nav > ul > li:hover {
@@ -109,14 +97,3 @@ bosley-header > nav > ul > li > a {
   text-decoration: none;
   color: white;
 }
-
-/*nav {
-  position: fixed;
-  right: 10px;
-  top: 10px;
-  background: #FFF;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
-  border-radius: 3px;
-  padding: 10px 20px;
-  z-index: 1;
-}*/
