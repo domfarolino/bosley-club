@@ -9,16 +9,29 @@
 .header {
   padding: 20px;
   background: firebrick;
-}
-
-.header-title {
-  color: white;
-  margin: 0px;
-  max-width: 300px;
-  display: inline-block;
+  background: #5f5e5e;
 }
 
 .header > .header-content {
   max-width: 900px;
   margin: 0 auto;
+}
+
+.header > .header-content > .header-title {
+  color: white;
+  margin: 0px;
+  max-width: 300px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.header > .header-content > img {
+  height: 40px;
+  width: 40px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+::slotted(nav) {
+  line-height: 30px;
 }
