@@ -27,17 +27,19 @@
       </nav>
     </bosley-header>
 
-    <sc-view class="view-home visible" route="^/$">
+    <sc-view remote class="view-home" route="^/$"></sc-view>
+    <sc-view remote class="view-about" route="^/about(.*)"></sc-view>
+
+    <sc-view class="view-contact visible" route="^/contact(.*)">
       <dom-card>
-        <h2 slot="dom-card-title">Home</h2>
+        <h2 slot="dom-card-title">Contact</h2>
         <p slot="dom-card-body">
-          Welcome home to the Bosley app!
+          Shoot us a message
         </p>
+        <input type="text" name="name" value="">
+        <button type="button" name="button">Send it!</button>
       </dom-card>
     </sc-view>
-
-    <sc-view remote class="view-about" route="^/about(.*)"></sc-view>
-    <sc-view remote class="view-contact" route="^/contact(.*)"></sc-view>
 
     <sc-router></sc-router>
   </body>

@@ -9,3 +9,91 @@ html, body {
   padding: 0;
   background: #ececec;
 }
+
+sc-view {
+  contain: strict;
+  /*
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  */
+  width: 100%;
+  height: 100vh;
+  margin-top: 30px;
+  padding: 10px;
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: transform 0.2s cubic-bezier(0, 0, .3, 1),
+              opacity 0.2s cubic-bezier(0, 0, .3, 1);
+}
+
+sc-view.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  background: inherit;
+}
+
+sc-view[remote]::before {
+  content: '';
+  opacity: 1;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  transition: opacity 0.2s cubic-bezier(0, 0, .3, 1);
+}
+
+sc-view[remote]::after {
+  content: '';
+  opacity: 0;
+  position: fixed;
+  pointer-events: events;
+  left: 50%;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  background: url(/imgs/loader.gif);
+  transition: opacity 0.2s cubic-bezier(0, 0, .3, 1);
+}
+
+sc-view[remote].pending::after {
+  opacity: 1;
+}
+
+sc-view[remote].loaded::before,
+sc-view[remote].loaded::after {
+  opacity: 0;
+}
+
+bosley-header > nav {
+  display: inline-block;
+  float: right;
+}
+
+bosley-header > nav > ul {
+  list-style: none;
+  margin: 0;
+}
+
+bosley-header > nav > ul > li {
+  display: inline-block;
+  float: left;
+  padding: 6px 15px;
+}
+
+bosley-header > nav > ul > li:hover {
+  background: rgba(40, 40, 40, .4);
+}
+
+bosley-header > nav > ul > li > a {
+  text-decoration: none;
+  color: white;
+}

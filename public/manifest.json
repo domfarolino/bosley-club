@@ -1,0 +1,17 @@
+{
+  "name": "Bosley Club",
+  "short_name": "Bosley Club",
+  "scope": "./",
+  "icons": [{
+    "src": "imgs/bosleyclub.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  },
+  {
+    "src": "imgs/bosleyclub-192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }],
+  "display": "standalone",
+  "start_url": "./"
+}
