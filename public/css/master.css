@@ -3,15 +3,16 @@
 }
 
 html, body {
-  font-family: Roboto, sans-serif;
   /* Normalize */
   margin: 0;
   padding: 0;
   background: #ececec;
+
+  font-family: Roboto, sans-serif;
 }
 
 sc-view {
-  contain: content;
+  contain: content; /* layout style paint */
   /*
   position: fixed;
   top: 0;
