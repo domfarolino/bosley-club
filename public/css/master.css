@@ -11,7 +11,7 @@ html, body {
 }
 
 sc-view {
-  contain: strict;
+  contain: content;
   /*
   position: fixed;
   top: 0;
@@ -20,7 +20,6 @@ sc-view {
   bottom: 0;
   */
   width: 100%;
-  height: 100vh;
   margin-top: 30px;
   padding: 10px;
   position: absolute;
