@@ -13,13 +13,6 @@ html, body {
 
 sc-view {
   contain: content; /* layout style paint */
-  /*
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  */
   width: 100%;
   min-height: 100px;
   margin-top: 30px;
