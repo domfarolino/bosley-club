@@ -4,10 +4,19 @@ require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+const handlebars = require('handlebars');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const LEX = require('letsencrypt-express');
+
+handlebars.registerHelper('ifNotEqual', function(a, b, opts) {
+  if (a !== b) {
+    console.log(a, b);
+    return opts.fn(this);
+  }
+});
 
 // For routes
 const pages = require('./lib/controllers/pages');
@@ -24,6 +33,20 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.get(/([^/]*)(\/|\/index.html)$/, (request, response) => {
+  request.requestedPage = request.params[0] || '';
+
+  Promise.all([
+    fs.readFileSync('./public/header.partial.html', 'utf-8'),
+    fs.readFileSync(`public/${request.requestedPage}/index.html`, 'utf-8'),
+    fs.readFileSync('public/footer.partial.html', 'utf-8')
+  ])
+  .then(files => files.map(f => handlebars.compile(f)(request)))
+  .then(files => response.send(files.join('')))
+  .catch(e => {console.log(e); return response.status(500).send(e)});
+});
+
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 const lex = LEX.create({
