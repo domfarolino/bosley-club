@@ -115,7 +115,7 @@ require('http').createServer(lex.middleware(app)).listen(process.env.SERVE_PORT,
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
 
-require('http2').createServer(lex.httpsOptions, lex.middleware(app)).listen(443, function () {
+require('https').createServer(lex.httpsOptions, lex.middleware(app)).listen(443, function () {
   console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
 });
 
