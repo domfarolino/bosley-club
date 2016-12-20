@@ -45,11 +45,11 @@
     </div>
 
     {{#ifNotEqual this.requestedPage ""}}
-    <sc-view remote class="view-home" route="^/$"></sc-view>
+    <div view remote class="view-home" route="^/$"></div>
     {{/ifNotEqual}}
     {{#ifNotEqual this.requestedPage "about"}}
-    <sc-view remote class="view-about" route="^/about(.*)"></sc-view>
+    <div view remote class="view-about" route="^/about(.*)"></div>
     {{/ifNotEqual}}
     {{#ifNotEqual this.requestedPage "contact"}}
-    <sc-view remote class="view-contact" route="^/contact(.*)"></sc-view>
+    <div view remote class="view-contact" route="^/contact(.*)"></div>
     {{/ifNotEqual}}

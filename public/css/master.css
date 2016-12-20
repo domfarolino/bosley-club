@@ -12,7 +12,7 @@ html, body {
   font-family: Roboto, sans-serif;
 }
 
-sc-view {
+div[view] {
   contain: content; /* layout style paint */
   top: 80px;
   left: 0;
@@ -30,13 +30,13 @@ sc-view {
               opacity 0.3s cubic-bezier(0, 0, .3, 1);
 }
 
-sc-view.visible {
+div[view].visible {
   opacity: 1;
   pointer-events: auto;
   transform: none;
 }
 
-sc-view[remote]::before {
+div[view][remote]::before {
   content: '';
   opacity: 1;
   pointer-events: none;
@@ -49,7 +49,7 @@ sc-view[remote]::before {
   transition: opacity 0.3s cubic-bezier(0, 0, .3, 1);
 }
 
-sc-view[remote]::after {
+div[view][remote]::after {
   content: '';
   opacity: 0;
   position: fixed;
@@ -65,12 +65,12 @@ sc-view[remote]::after {
   transition: opacity 0.3s cubic-bezier(0, 0, .3, 1);
 }
 
-sc-view[remote].pending::after {
+div[view][remote].pending::after {
   opacity: 1;
 }
 
-sc-view[remote].loaded::before,
-sc-view[remote].loaded::after {
+div[view][remote].loaded::before,
+div[view][remote].loaded::after {
   opacity: 0;
 }
 
