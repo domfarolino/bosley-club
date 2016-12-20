@@ -2,17 +2,19 @@
 
 require('dotenv').config();
 
-const express = require('express');
-const app = express();
-const path = require('path');
 const fs = require('fs');
-const handlebars = require('handlebars');
+const path = require('path');
+const crypto = require('crypto');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
+const handlebars = require('handlebars');
 const bodyParser = require('body-parser');
 const LEX = require('letsencrypt-express');
-const crypto = require('crypto');
+const cookieParser = require('cookie-parser');
 
+const express = require('express');
+const app = express();
+
+// Simple helper for SSR template logic
 handlebars.registerHelper('ifNotEqual', function (a, b, opts) {
   if (a !== b) {
     console.log(a, b);
@@ -20,18 +22,14 @@ handlebars.registerHelper('ifNotEqual', function (a, b, opts) {
   }
 });
 
-// View engine setup
-app.set('views', path.join(__dirname, 'lib', 'views'));
-app.set('view engine', 'jade');
-
 // Middleware setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// Custom * hanlder for custom Cache-Control
 app.get('*', (request, response, next) => {
-  // Set a custom Cache-Control
   response.set({
     'Cache-Control': 'no-cache'
   });
@@ -45,6 +43,7 @@ app.get('*', (request, response, next) => {
 
 /**
  * Server side rendering bit for our views
+ * We want to SSR anything paths like `/` `/anything/` `../index.html`
  */
 app.get(/([^/]*)(\/|\/index.html)$/, (request, response) => {
   request.requestedPage = request.params[0] || '';
@@ -68,17 +67,19 @@ app.get(/([^/]*)(\/|\/index.html)$/, (request, response) => {
       }).send(pageContent);
 });
 
+/**
+ * API setup
+ */
+
 const apiV1 = require('./lib/controllers/api/v1');
 
-app.get('/api/v1*', apiV1.apiMiddleware);
+app.get('/api/v1*', apiV1.apiMiddleware); // Sets headers for every API route and calls .next()
 app.get('/api/v1', apiV1.index);
 app.use('/', express.static(path.join(__dirname, 'public')));
 
-
 /**
- * Letsencrypt stuff below
+ * Letsencrypt and other stuff below
  */
-
 
 const lex = LEX.create({
   server: 'staging',
@@ -86,8 +87,6 @@ const lex = LEX.create({
   configDir: '/etc/letsencrypt',
   approveDomains: approveDomains
 });
-
-console.log(require('os').homedir() + '/letsencrypt/etc');
 
 function approveDomains(opts, certs, cb) {
   // This is where you check your database and associated
