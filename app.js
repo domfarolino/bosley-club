@@ -63,8 +63,12 @@ app.get(/([^/]*)(\/|\/index.html)$/, (request, response) => {
   const pageContent = compiledFiles.join('');
 
   response.set({
-        'ETag': crypto.createHash('md5').update(pageContent).digest('hex')
-      }).send(pageContent);
+    'ETag': crypto.createHash('md5').update(pageContent).digest('hex')
+  });
+
+  setTimeout(function() {
+    response.send(pageContent);
+  }, 2500);
 });
 
 /**
