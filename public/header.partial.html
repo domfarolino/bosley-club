@@ -30,22 +30,26 @@
     </script>
   </head>
   <body>
-    <bosley-header>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </nav>
-    </bosley-header>
+    <div class="header">
+      <div class="header-content">
+        <img src="/imgs/bosleybox.svg"alt="bosley box icon">
+        <h2 class="header-title">Bosley Club</h2>
+        <nav>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
 
     {{#ifNotEqual this.requestedPage ""}}
-    <sc-view remote class="view-home" route="^/$"></sc-view>
+    <div view remote class="view-home" route="^/$"></div>
     {{/ifNotEqual}}
     {{#ifNotEqual this.requestedPage "about"}}
-    <sc-view remote class="view-about" route="^/about(.*)"></sc-view>
+    <div view remote class="view-about" route="^/about(.*)"></div>
     {{/ifNotEqual}}
     {{#ifNotEqual this.requestedPage "contact"}}
-    <sc-view remote class="view-contact" route="^/contact(.*)"></sc-view>
+    <div view remote class="view-contact" route="^/contact(.*)"></div>
     {{/ifNotEqual}}

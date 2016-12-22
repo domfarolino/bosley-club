@@ -7,12 +7,13 @@ html, body {
   margin: 0;
   padding: 0;
   background: #ececec;
+  overflow-x: hidden;
 
   font-family: Roboto, sans-serif;
 }
 
-sc-view {
-  contain: content; /* layout style paint */
+div[view] {
+  contain: content; /*layout style paint */
   top: 80px;
   left: 0;
   right: 0;
@@ -29,17 +30,17 @@ sc-view {
               opacity 0.3s cubic-bezier(0, 0, .3, 1);
 }
 
-sc-view.visible {
+div[view].visible {
   opacity: 1;
   pointer-events: auto;
   transform: none;
 }
 
-sc-view[remote]::before {
+div[view][remote]::before {
   content: '';
   opacity: 1;
   pointer-events: none;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -48,15 +49,16 @@ sc-view[remote]::before {
   transition: opacity 0.3s cubic-bezier(0, 0, .3, 1);
 }
 
-sc-view[remote]::after {
+div[view][remote]::after {
   content: '';
   opacity: 0;
-  position: fixed;
+  position: absolute;
   pointer-events: events;
-  left: 50%;
   top: 50%;
+  left: 50%;
   width: 32px;
   height: 32px;
+  margin: -16px -16px; /* center after top and left */
   border-radius: 50%;
   border: 2px solid slategray; /*#586986*/
   border-top-color: transparent;
@@ -64,36 +66,68 @@ sc-view[remote]::after {
   transition: opacity 0.3s cubic-bezier(0, 0, .3, 1);
 }
 
-sc-view[remote].pending::after {
+div[view][remote].pending::after {
   opacity: 1;
 }
 
-sc-view[remote].loaded::before,
-sc-view[remote].loaded::after {
+div[view][remote].loaded::before,
+div[view][remote].loaded::after {
   opacity: 0;
 }
 
-bosley-header > nav {
-  display: inline-block;
-  float: right;
+.header {
+  font-family: inherit;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 20px;
+
+  background: firebrick;
+  background: #5f5e5e;
 }
 
-bosley-header > nav > ul {
+.header > .header-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header > .header-content > .header-title {
+  color: white;
+  margin: 0px;
+  max-width: 300px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.header > .header-content > img {
+  height: 40px;
+  width: 40px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.header > .header-content > nav {
+  display: inline-block;
+  float: right;
+  line-height: 30px;
+}
+
+.header > .header-content > nav > ul {
   list-style: none;
   margin: 0;
 }
 
-bosley-header > nav > ul > li {
+.header > .header-content > nav > ul > li {
   display: inline-block;
   float: left;
   padding: 6px 15px;
 }
 
-bosley-header > nav > ul > li:hover {
+.header > .header-content > nav > ul > li:hover {
   background: rgba(40, 40, 40, .4);
 }
 
-bosley-header > nav > ul > li > a {
+.header > .header-content > nav > ul > li > a {
   text-decoration: none;
   color: white;
 }
@@ -106,4 +140,13 @@ bosley-header > nav > ul > li > a {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.dom-card {
+  width: 100%;
+  max-width: 700px;
+  padding: 20px;
+  margin: 10px auto;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  background-color: white;
 }
