@@ -14,14 +14,6 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 
-// Simple helper for SSR template logic
-handlebars.registerHelper('ifNotEqual', function (a, b, opts) {
-  if (a !== b) {
-    console.log(a, b);
-    return opts.fn(this);
-  }
-});
-
 // Middleware setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -45,7 +37,7 @@ app.get('*', (request, response, next) => {
  * Server side rendering bit for our views
  * We want to SSR anything paths like `/` `/anything/` `../index.html`
  */
-app.get(/([^/]*)(\/|\/index.html)$/, (request, response) => {
+app.get(/\/([^.]*$|\S*index\.html)/, (request, response) => {
   request.requestedPage = request.params[0] || '';
 
   let files = [];

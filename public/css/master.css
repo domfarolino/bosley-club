@@ -12,7 +12,7 @@ html, body {
   font-family: Roboto, sans-serif;
 }
 
-div[view] {
+section.view-content {
   contain: content; /*layout style paint */
   top: 80px;
   left: 0;
@@ -30,15 +30,15 @@ div[view] {
               opacity 0.3s cubic-bezier(0, 0, .3, 1);
 }
 
-div[view].visible {
+section.view-content.visible {
   opacity: 1;
   pointer-events: auto;
   transform: none;
 }
 
-div[view][remote]::before {
+section.view-content::before {
   content: '';
-  opacity: 1;
+  opacity: 0;
   pointer-events: none;
   position: absolute;
   top: 0;
@@ -49,7 +49,7 @@ div[view][remote]::before {
   transition: opacity 0.3s cubic-bezier(0, 0, .3, 1);
 }
 
-div[view][remote]::after {
+body::after {
   content: '';
   opacity: 0;
   position: absolute;
@@ -66,13 +66,8 @@ div[view][remote]::after {
   transition: opacity 0.3s cubic-bezier(0, 0, .3, 1);
 }
 
-div[view][remote].pending::after {
+body.view-pending::after {
   opacity: 1;
-}
-
-div[view][remote].loaded::before,
-div[view][remote].loaded::after {
-  opacity: 0;
 }
 
 .header {

@@ -44,12 +44,4 @@
       </div>
     </div>
 
-    {{#ifNotEqual this.requestedPage ""}}
-    <div view remote class="view-home" route="^/$"></div>
-    {{/ifNotEqual}}
-    {{#ifNotEqual this.requestedPage "about"}}
-    <div view remote class="view-about" route="^/about(.*)"></div>
-    {{/ifNotEqual}}
-    {{#ifNotEqual this.requestedPage "contact"}}
-    <div view remote class="view-contact" route="^/contact(.*)"></div>
-    {{/ifNotEqual}}
+    <section class="view-content visible">
