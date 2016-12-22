@@ -66,9 +66,7 @@ app.get(/([^/]*)(\/|\/index.html)$/, (request, response) => {
     'ETag': crypto.createHash('md5').update(pageContent).digest('hex')
   });
 
-  setTimeout(function() {
-    response.send(pageContent);
-  }, 2500);
+  response.send(pageContent);
 });
 
 /**
