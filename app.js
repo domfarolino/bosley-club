@@ -42,11 +42,11 @@ app.get('/api/v1*', apiV1.apiMiddleware); // Sets headers for every API route an
 app.get('/api/v1', apiV1.index);
 
 /**
- * Server side rendering bit for our views
- * We want to SSR anything paths like `/` `/anything/` `../index.html`
+ * Partial view rendering for paths like: `/`, `/path`, and `/path/`
+ * See regex in action: https://regex101.com/r/ciRbkx/4
  */
-app.get(/\/([^.]*$|\S*index\.html)/, (request, response) => {
-  request.requestedPage = request.params[0] || '';
+app.get(/\/([^.]*$)/, (request, response) => {
+  request.requestedPage = request.params[0] || ''; // should be something like `` or `path`
 
   let filesArray;
   if ('partial' in request.query) {
