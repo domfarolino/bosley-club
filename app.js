@@ -6,7 +6,6 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const logger = require('morgan');
-const handlebars = require('handlebars');
 const bodyParser = require('body-parser');
 const LEX = require('letsencrypt-express');
 const cookieParser = require('cookie-parser');
@@ -49,19 +48,18 @@ app.get('/api/v1', apiV1.index);
 app.get(/\/([^.]*$|\S*index\.html)/, (request, response) => {
   request.requestedPage = request.params[0] || '';
 
-  let files = [];
+  let filesArray;
   if ('partial' in request.query) {
-    files = [fs.readFileSync(`public/${request.requestedPage}/index.html`, 'utf-8')]
+    filesArray = [fs.readFileSync(`public/${request.requestedPage}/index.html`, 'utf-8')]
   } else {
-    files = [
+    filesArray = [
       fs.readFileSync('./public/header.partial.html', 'utf-8'),
       fs.readFileSync(`public/${request.requestedPage}/index.html`, 'utf-8'),
       fs.readFileSync('public/footer.partial.html', 'utf-8')
     ];
   }
 
-  const compiledFiles = files.map(file => handlebars.compile(file.toString())(request));
-  const pageContent = compiledFiles.join('');
+  const pageContent = filesArray.join('');
 
   response.set({
     'ETag': crypto.createHash('md5').update(pageContent).digest('hex')
