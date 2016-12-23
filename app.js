@@ -14,14 +14,6 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 
-// Simple helper for SSR template logic
-handlebars.registerHelper('ifNotEqual', function (a, b, opts) {
-  if (a !== b) {
-    console.log(a, b);
-    return opts.fn(this);
-  }
-});
-
 // Middleware setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -42,10 +34,19 @@ app.get('*', (request, response, next) => {
 });
 
 /**
+ * API setup
+ */
+
+const apiV1 = require('./lib/controllers/api/v1');
+
+app.get('/api/v1*', apiV1.apiMiddleware); // Sets headers for every API route and calls .next()
+app.get('/api/v1', apiV1.index);
+
+/**
  * Server side rendering bit for our views
  * We want to SSR anything paths like `/` `/anything/` `../index.html`
  */
-app.get(/([^/]*)(\/|\/index.html)$/, (request, response) => {
+app.get(/\/([^.]*$|\S*index\.html)/, (request, response) => {
   request.requestedPage = request.params[0] || '';
 
   let files = [];
@@ -70,13 +71,8 @@ app.get(/([^/]*)(\/|\/index.html)$/, (request, response) => {
 });
 
 /**
- * API setup
+ * Static
  */
-
-const apiV1 = require('./lib/controllers/api/v1');
-
-app.get('/api/v1*', apiV1.apiMiddleware); // Sets headers for every API route and calls .next()
-app.get('/api/v1', apiV1.index);
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 /**
