@@ -34,6 +34,15 @@ app.get('*', (request, response, next) => {
 });
 
 /**
+ * API setup
+ */
+
+const apiV1 = require('./lib/controllers/api/v1');
+
+app.get('/api/v1*', apiV1.apiMiddleware); // Sets headers for every API route and calls .next()
+app.get('/api/v1', apiV1.index);
+
+/**
  * Server side rendering bit for our views
  * We want to SSR anything paths like `/` `/anything/` `../index.html`
  */
@@ -62,13 +71,8 @@ app.get(/\/([^.]*$|\S*index\.html)/, (request, response) => {
 });
 
 /**
- * API setup
+ * Static
  */
-
-const apiV1 = require('./lib/controllers/api/v1');
-
-app.get('/api/v1*', apiV1.apiMiddleware); // Sets headers for every API route and calls .next()
-app.get('/api/v1', apiV1.index);
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 /**
