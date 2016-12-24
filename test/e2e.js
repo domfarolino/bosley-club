@@ -2,13 +2,12 @@
 
 const chai = require('chai');
 chai.use(require('chai-as-promised'));
-const webdriver = require('selenium-webdriver');
 const expect = chai.expect;
-chai.should();
-const test = require('selenium-webdriver/testing');
 
-let By = webdriver.By;
-let until = webdriver.until;
+const webdriver = require('selenium-webdriver');
+const test = require('selenium-webdriver/testing'),
+      By = webdriver.By,
+      until = webdriver.until;
 
 let driver = new webdriver.Builder().forBrowser('chrome').build();
 
