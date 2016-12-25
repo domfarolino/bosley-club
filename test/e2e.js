@@ -8,6 +8,15 @@ const startServerChildProcess = require('./spawnProcess').startServerChildProces
 const killServerChildProcess = require('./spawnProcess').killServerChildProcess;
 const childProcess = startServerChildProcess();
 
+/**
+ * Thanks to the articles:
+ * http://markbirbeck.com/2015/12/11/using-selenium-webdriver-with-mocha/
+ * https://watirmelon.blog/2015/10/28/getting-started-with-webdriverjs-mocha/
+ * though I am sure this could be improved upon soon, it is a good start.
+ * TODO: look into a better way to start the dev server alongside the test running.
+ * `Concurrently` package might do it (installed) but not sure yet. Is spawn process
+ * a bit much for what we're doing?
+ */
 const webdriver = require('selenium-webdriver');
 const test = require('selenium-webdriver/testing'),
       By       = webdriver.By,
