@@ -13,13 +13,19 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 
-// Middleware setup
+/**
+ * Middleware setup (gross)
+ */
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, './public'));
 
-// Custom * hanlder for custom Cache-Control
+/**
+ * Custom handler for all cache control
+ */
 app.get('*', (request, response, next) => {
   response.set({
     'Cache-Control': 'no-cache'
@@ -35,37 +41,33 @@ app.get('*', (request, response, next) => {
 /**
  * API setup
  */
-
 const apiV1 = require('./lib/controllers/api/v1');
 
 app.get('/api/v1*', apiV1.apiMiddleware); // Sets headers for every API route and calls .next()
 app.get('/api/v1', apiV1.index);
 
 /**
- * Partial view rendering for paths like: `/`, `/path`, and `/path/`
+ * Support for partial view rendering. This handler matches requests like: `/`, `/path`, and `/path/`
  * See regex in action: https://regex101.com/r/ciRbkx/4
+ * We render the proper view partial giving it a boolean in the data object related to whether the
+ * ?partial query parameter exists in the request. View partials (in ./public) will load in the header
+ * and footer partials if the ?partial query parameter does not exist. If the ?partial parameter exists
+ * the view partial will not pull in the header and footer, as it is just the main partial content we want
+ * and not an entire user-ready page.
  */
 app.get(/\/([^.]*$)/, (request, response) => {
   request.requestedPage = request.params[0] || ''; // should be something like `` or `path`
 
-  let filesArray;
-  if ('partial' in request.query) {
-    filesArray = [fs.readFileSync(`public/${request.requestedPage}/index.html`, 'utf-8')]
-  } else {
-    filesArray = [
-      fs.readFileSync('./public/header.partial.html', 'utf-8'),
-      fs.readFileSync(`public/${request.requestedPage}/index.html`, 'utf-8'),
-      fs.readFileSync('public/footer.partial.html', 'utf-8')
-    ];
-  }
+  const data = {partial: 'partial' in request.query};
+  const options = {};
 
-  const pageContent = filesArray.join('');
+  response.render(path.join(`${request.requestedPage}`), data, function(err, document) {
+    response.set({
+      'ETag': crypto.createHash('md5').update(document).digest('hex')
+    });
 
-  response.set({
-    'ETag': crypto.createHash('md5').update(pageContent).digest('hex')
+    response.send(document);
   });
-
-  response.send(pageContent);
 });
 
 /**
@@ -139,7 +141,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function (err, request, response, next) {
   response.status(err.status || 500);
-  response.render({
+  response.json({
     message: err.message,
     error: {}
   });

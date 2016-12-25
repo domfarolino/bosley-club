@@ -1,3 +1,5 @@
+<% if(partial == false) { %> <% include ../header %> <% } %>
+
     <div view class="view-contact visible" route="^/contact(.*)">
       <div class="dom-card">
         <h2>Contact</h2>
@@ -40,3 +42,5 @@
         <button type="button" name="button">Send it!</button>
       </div>
     </div>
+
+<% if(partial == false) { %> <% include ../footer %> <% } %>
