@@ -6,7 +6,7 @@
     "start": "concurrently \"npm run webpack\" \"npm run serve\" --kill-others",
     "serve": "sudo bash -ic \"node ./bin/www\"",
     "dev": "export SERVE_PORT=8080 HTTPS_SERVE_PORT=8081; node ./bin/www",
-    "frigged": "concurrently \"npm start\" \"mocha test/e2e.js\" --kill-others",
+    "frigged": "concurrently \"npm run dev\" \"mocha test/e2e.js\" --kill-others",
     "test": "mocha test/e2e.js",
     "webpack": "cd ./lib/client && ../../node_modules/webpack/bin/webpack.js --watch && cd ../.."
   },

@@ -6,21 +6,20 @@ const argv =  process.argv;
 argv.shift();
 argv.shift();
 
-function startServerChildProcess(){
+module.exports.startServerChildProcess = function (){
   console.log("STARTING", process.execPath, "npm", argv);
-  child = spawn('npm', argv, {
+  child = spawn('npm', ['run', 'dev'], {
     cwd: process.cwd(),
     env: process.env
   });
 
-  child.stdout.pipe(process.stdout);
+  // child.stdout.pipe(process.stdout);
   child.stderr.pipe(process.stderr);
-  console.log("STARTED with PID:", child.pid);
+  console.log("Started server with PID:", child.pid);
+  return child;
 }
 
-startServerChildProcess();
-
-const killServerChildProcess = function (pid, signal, callback) {
+module.exports.killServerChildProcess = function(pid, signal, callback) {
   signal = signal || 'SIGKILL';
   callback = callback || function () {};
 
@@ -44,4 +43,6 @@ const killServerChildProcess = function (pid, signal, callback) {
   }
 };
 
-setTimeout(() => {killServerChildProcess(child.pid)}, 10000);
+//startServerChildProcess();
+
+//setTimeout(() => {killServerChildProcess(child.pid)}, 10000);
