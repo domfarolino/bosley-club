@@ -13,14 +13,19 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 
-// Middleware setup
+/**
+ * Middleware setup (gross)
+ */
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, './public'));
 
-// Custom * hanlder for custom Cache-Control
+/**
+ * Custom handler for all cache control
+ */
 app.get('*', (request, response, next) => {
   response.set({
     'Cache-Control': 'no-cache'
@@ -36,17 +41,19 @@ app.get('*', (request, response, next) => {
 /**
  * API setup
  */
-
 const apiV1 = require('./lib/controllers/api/v1');
 
 app.get('/api/v1*', apiV1.apiMiddleware); // Sets headers for every API route and calls .next()
 app.get('/api/v1', apiV1.index);
 
-app.set('views', path.join(__dirname, './public'));
-
 /**
- * Partial view rendering for paths like: `/`, `/path`, and `/path/`
+ * Support for partial view rendering. This handler matches requests like: `/`, `/path`, and `/path/`
  * See regex in action: https://regex101.com/r/ciRbkx/4
+ * We render the proper view partial giving it a boolean in the data object related to whether the
+ * ?partial query parameter exists in the request. View partials (in ./public) will load in the header
+ * and footer partials if the ?partial query parameter does not exist. If the ?partial parameter exists
+ * the view partial will not pull in the header and footer, as it is just the main partial content we want
+ * and not an entire user-ready page.
  */
 app.get(/\/([^.]*$)/, (request, response) => {
   request.requestedPage = request.params[0] || ''; // should be something like `` or `path`
