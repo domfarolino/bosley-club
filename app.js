@@ -18,6 +18,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.set('view engine', 'ejs');
 
 // Custom * hanlder for custom Cache-Control
 app.get('*', (request, response, next) => {
@@ -41,6 +42,8 @@ const apiV1 = require('./lib/controllers/api/v1');
 app.get('/api/v1*', apiV1.apiMiddleware); // Sets headers for every API route and calls .next()
 app.get('/api/v1', apiV1.index);
 
+app.set('views', path.join(__dirname, './public'));
+
 /**
  * Partial view rendering for paths like: `/`, `/path`, and `/path/`
  * See regex in action: https://regex101.com/r/ciRbkx/4
@@ -48,24 +51,16 @@ app.get('/api/v1', apiV1.index);
 app.get(/\/([^.]*$)/, (request, response) => {
   request.requestedPage = request.params[0] || ''; // should be something like `` or `path`
 
-  let filesArray;
-  if ('partial' in request.query) {
-    filesArray = [fs.readFileSync(`public/${request.requestedPage}/index.html`, 'utf-8')]
-  } else {
-    filesArray = [
-      fs.readFileSync('./public/header.partial.html', 'utf-8'),
-      fs.readFileSync(`public/${request.requestedPage}/index.html`, 'utf-8'),
-      fs.readFileSync('public/footer.partial.html', 'utf-8')
-    ];
-  }
+  const data = {partial: 'partial' in request.query};
+  const options = {};
 
-  const pageContent = filesArray.join('');
+  response.render(path.join(`${request.requestedPage}`), data, function(err, document) {
+    response.set({
+      'ETag': crypto.createHash('md5').update(document).digest('hex')
+    });
 
-  response.set({
-    'ETag': crypto.createHash('md5').update(pageContent).digest('hex')
+    response.send(document);
   });
-
-  response.send(pageContent);
 });
 
 /**
