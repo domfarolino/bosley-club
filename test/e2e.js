@@ -4,10 +4,6 @@ const chai = require('chai');
 chai.use(require('chai-as-promised'));
 const expect = chai.expect;
 
-const startServerChildProcess = require('./spawnProcess').startServerChildProcess;
-const killServerChildProcess = require('./spawnProcess').killServerChildProcess;
-const childProcess = startServerChildProcess();
-
 const webdriver = require('selenium-webdriver');
 const test = require('selenium-webdriver/testing'),
       By       = webdriver.By,
@@ -70,7 +66,6 @@ describe('Suite 1', function() {
   after(function(done) {
     done();
     driver.quit();
-    killServerChildProcess(child.pid);
   });
 
 });
