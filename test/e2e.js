@@ -44,35 +44,35 @@ describe('Suite 1', function() {
   });
 
   it('should render home content on root load', function() {
-    driver.wait(until.elementLocated(webdriver.By.css('div[view].view-home')), 4000).getAttribute('route')
-      .then(route => expect(route).to.equal('^/$'));
+    driver.wait(until.elementLocated(webdriver.By.css('div[view]')), 4000).getAttribute('id')
+      .then(id => expect(id).to.equal('view-home'));
   });
 
-  it('should render about content on /about load', function() {
-    driver.get('http://localhost:8080/about')
-      .then(() => driver.wait(until.elementLocated(webdriver.By.css('div[view].view-about')), 4000).getAttribute('route'))
-      .then(route => expect(route).to.equal('^/about(.*)'));
+  it('should render about content on /resume load', function() {
+    driver.get('http://localhost:8080/resume')
+      .then(() => driver.wait(until.elementLocated(webdriver.By.css('div[view]')), 4000).getAttribute('id'))
+      .then(id => expect(id).to.equal('view-resume'));
   });
 
-  it('should render contact content on /contact load', function() {
-    driver.get('http://localhost:8080/contact')
-      .then(() => driver.wait(until.elementLocated(webdriver.By.css('div[view].view-contact')), 4000).getAttribute('route'))
-      .then(route => expect(route).to.equal('^/contact(.*)'));
+  it('should render contact content on /public-keys load', function() {
+    driver.get('http://localhost:8080/public-keys')
+      .then(() => driver.wait(until.elementLocated(webdriver.By.css('div[view]')), 4000).getAttribute('id'))
+      .then(id => expect(id).to.equal('view-public-keys'));
   });
 
-  it('should load about content when about link is clicked', function() {
-    driver.findElement(By.id('a-about')).click()
+  it('should load resume content when resume link is clicked', function() {
+    driver.findElement(By.id('a-resume')).click()
       .then(() => {
-        driver.wait(until.elementLocated(webdriver.By.css('div[view].view-about')), 4000).getAttribute('route')
-          .then(route => expect(route).to.equal('^/about(.*)'));
+        driver.wait(until.elementLocated(webdriver.By.css('div[view]')), 4000).getAttribute('id')
+          .then(id => expect(id).to.equal('view-resume'));
       });
   });
 
-  it('should load about content when about link is clicked', function() {
-    driver.findElement(By.id('a-contact')).click()
+  it('should load about pubkey when pubkey link is clicked', function() {
+    driver.findElement(By.id('a-public-keys')).click()
       .then(() => {
-        driver.wait(until.elementLocated(webdriver.By.css('div[view].view-contact')), 4000).getAttribute('route')
-          .then(route => expect(route).to.equal('^/contact(.*)'));
+        driver.wait(until.elementLocated(webdriver.By.css('div[view]')), 4000).getAttribute('id')
+          .then(id => expect(id).to.equal('view-public-keys'));
       });
   });
 
