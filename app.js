@@ -61,7 +61,7 @@ app.get(/\/([^.]*$)/, (request, response) => {
   const data = {partial: 'partial' in request.query};
   const options = {};
 
-  response.render(path.join(`${request.requestedPage}`), data, function(err, document) {
+  response.render(path.join(request.requestedPage), data, function(err, document) {
     response.set({
       'ETag': crypto.createHash('md5').update(document).digest('hex')
     });

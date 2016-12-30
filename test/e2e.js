@@ -34,12 +34,12 @@ describe('Suite 1', function() {
   });
 
   it('should render the header on load', function() {
-    driver.findElement(webdriver.By.css('.header'))
+    driver.wait(until.elementLocated(webdriver.By.css('.header')), 4000)
       .then(element => expect(element).to.not.equal(null));
   });
 
   it('should render the navigation on load', function() {
-    driver.findElement(webdriver.By.css('nav'))
+    driver.wait(until.elementLocated(webdriver.By.css('nav')), 4000)
       .then(element => expect(element).to.not.equal(null));
   });
 
