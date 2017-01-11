@@ -1,5 +1,9 @@
 # bosley-club
 
+# Deprecated
+
+The project has been deprecated and the code has been used as a base for https://domfarolino.com & https://revolutionuc.com
+
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 [![build status](https://api.travis-ci.org/domfarolino/bosley-club.svg?branch=master)](https://api.travis-ci.org/domfarolino/bosley-club.svg?branch=master)
 [![Dependency Status](https://david-dm.org/domfarolino/bosley-club.svg)](https://david-dm.org/domfarolino/bosley-club)
